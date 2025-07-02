@@ -1,22 +1,18 @@
 # 🤖 Body Info Chatbot
 
-This is a voice-enabled chatbot that provides information about human body organs, with images and styled output.
+A voice-enabled chatbot built using Flask that provides detailed information about human body organs with images. Users can interact via text or microphone, clear the chat, and even save the full conversation.
 
-## 💡 Features
-- 🎤 Voice & text input
-- 🧠 Smart response with image
+## 🌟 Features
+
+- 🎤 Voice & ✍️ Text input
+- 🧠 Smart response matching (exact + partial)
+- 🖼️ Image display of body parts
 - 💬 Welcome message
 - 🧹 Clear chat
-- 💾 Save conversation to file
-- 📦 Runs fully offline (no API needed)
+- 💾 Save chat to .txt file
+- ⚡ Runs offline – no internet or API needed
 
-## 📁 Technologies
-- Python (Flask)
-- HTML, CSS, JavaScript
-- CSV for storing Q&A
-- Google Chrome (for voice input)
-
-## 🚀 Run Locally
+## 🚀 How to Run
 
 ```bash
 git clone https://github.com/MariyamShareef872/body-info-chatbot.git
