@@ -1,1 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Body Info Bot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>💬 Body Info Bot</h2>
+        </div>
+        <div id="chatlog"></div>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Type or speak..." />
+            <button onclick="sendMessage()">Send</button>
+            <button id="mic" type="button">🎤</button>
+            <button onclick="clearChat()" class="clear-btn">🧹 Clear</button>
+            <button onclick="saveChat()" class="save-btn">💾 Save Chat</button>
+            
+        </div>
+        <div id="typing"></div>
+    </div>
 
+    <script>
+        function sendMessage() {
+            const input = document.getElementById("userInput");
+            const chatlog = document.getElementById("chatlog");
+            const typing = document.getElementById("typing");
+            const userMsg = input.value.trim();
+
+            if (!userMsg) return;
+
+            // Show user message
+            const userDiv = document.createElement("div");
+            userDiv.className = "message user";
+            userDiv.innerText = userMsg;
+            chatlog.appendChild(userDiv);
+
+            // Show typing indicator
+            typing.innerText = "Bot is typing...";
+
+            fetch("/get?msg=" + encodeURIComponent(userMsg))
+                .then(res => res.text())
+                .then(data => {
+                    const botDiv = document.createElement("div");
+                    botDiv.className = "message bot";
+                    botDiv.innerHTML = data;
+                    chatlog.appendChild(botDiv);
+                    typing.innerText = "";
+                    chatlog.scrollTop = chatlog.scrollHeight;
+                });
+
+            input.value = "";
+        }
+    
+const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+recognition.lang = 'en-US';
+recognition.interimResults = false;
+
+document.getElementById("mic").addEventListener("click", () => {
+    recognition.start();
+    document.getElementById("typing").innerText = "🎙 Listening...";
+});
+
+recognition.onresult = function(event) {
+    const spokenText = event.results[0][0].transcript;
+    document.getElementById("userInput").value = spokenText;
+    document.getElementById("typing").innerText = "✅ Got it: " + spokenText;
+    sendMessage();
+};
+
+recognition.onerror = function(event) {
+    document.getElementById("typing").innerText = "❌ Error: " + event.error;
+};
+function clearChat() {
+    document.getElementById("chatlog").innerHTML = "";
+    document.getElementById("typing").innerText = "";
+    document.getElementById("userInput").value = "";
+}
+window.onload = function () {
+    const chatlog = document.getElementById("chatlog");
+
+    const welcomeDiv = document.createElement("div");
+    welcomeDiv.className = "message bot";
+    welcomeDiv.innerText ="👋 Hello beautiful soul, which body organ do you want to know just write it's name or speak?  Example: brain or brainfunction";
+    
+    chatlog.appendChild(welcomeDiv);
+};
+function saveChat() {
+    const chatlog = document.getElementById("chatlog");
+    const messages = chatlog.querySelectorAll(".message");
+    let chatText = "";
+
+    messages.forEach(msg => {
+        const isUser = msg.classList.contains("user");
+        const prefix = isUser ? "You: " : "Bot: ";
+        chatText += prefix + msg.innerText + "\n\n";
+    });
+
+    const blob = new Blob([chatText], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "body_bot_chat.txt";
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+</script>
+
+</body>
+</html>
