@@ -4,16 +4,6 @@ A smart, user-friendly chatbot built with **Python + Flask**, designed to answer
 
 ---
 
-## 🧠 Features
-
-- ✔️ Searchable body organ facts  
-- ✔️ Text + Image responses (from local `/static/images/`)  
-- ✔️ Voice input using SpeechRecognition API (🎤)  
-- ✔️ "Save Chat to File" functionality  
-- ✔️ Clear chat button  
-- ✔️ Friendly welcome message  
-- ✔️ Smart matching (fuzzy logic for partial or similar questions)
-
 
 ## 🌟 Features
 
@@ -24,6 +14,7 @@ A smart, user-friendly chatbot built with **Python + Flask**, designed to answer
 - 🧹 Clear chat
 - 💾 Save chat to .txt file
 - ⚡ Runs offline – no internet or API needed
+- ✔️ Smart matching (fuzzy logic for partial or similar questions)
 
 ## 🚀 How to Run
 
@@ -33,6 +24,8 @@ cd body-info-chatbot
 pip install flask
 python app.py
 Then open http://127.0.0.1:5000 in your browser.
+
+---
 
  🌱 Future Plans
 We plan to enhance this chatbot with:
